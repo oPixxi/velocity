@@ -1,56 +1,69 @@
-const https = require("https")
-const fs = require("fs")
-const util = require("util")
-const stream = require("stream")
+const https = require("https");
+const fs = require("fs");
+const util = require("util");
+const stream = require("stream");
+const path = require("path");
+const { ipcRenderer } = require("electron");
+const { url } = require("inspector");
+const ipc = ipcRenderer;
 
-const startDownloadBtn = document.getElementById('startDownloadBtn')
-startDownloadBtn.addEventListener("click", startDownload)
+// Calls scripts
+require("./title-bar");
 
-const isEmpty = str => !str.trim().length
+const startDownloadBtn = document.getElementById('startDownloadBtn');
+startDownloadBtn.addEventListener("click", startDownload);
+const folderSelectBtn = document.getElementById('folderSelectBtn');
+folderSelectBtn.addEventListener("click", folderSelection);
+
+const urlInput = document.getElementById('urlInput');
+const filenameInput = document.getElementById('filenameInput');
+const speedLimitInput = document.getElementById('speedLimitInput');
+
+urlInput.addEventListener("input", () => { if (urlInput.value != "") urlInput.classList.remove("is-danger"); else urlInput.classList.add("is-danger")});
+filenameInput.addEventListener("input", () => { if (filenameInput.value != "") filenameInput.classList.remove("is-danger"); else filenameInput.classList.add("is-danger") });
+speedLimitInput.addEventListener("input", () => { if (!speedLimitInput.value) speedLimitInput.classList.remove("is-danger"); else speedLimitInput.classList.add("is-danger") });
+
+const isEmpty = str => !str.trim().length;
+const roundNumber = (input, decimalPlace) => Math.round(input * (10 ** decimalPlace)) / (10 ** decimalPlace);
+let dir = null;
 
 async function startDownload() {
-    const urlInput = document.getElementById('urlInput');
-    const filenameInput = document.getElementById('filenameInput');
-    const speedLimitInput = document.getElementById('speedLimitInput');
-
     // Check if the input fields are empty to throw up an error and not allow the download to start
     let emptyInputField = false;
     if (isEmpty(urlInput.value)) {
         // console.log("URL is empty")
-        urlInput.classList.add("is-danger")
+        urlInput.classList.add("is-danger");
         emptyInputField = true;
-    } else {
-        urlInput.classList.remove("is-danger")
-    }
+    };
 
     if (isEmpty(filenameInput.value)) {
-        // console.log("Filename is empty")
-        filenameInput.classList.add("is-danger")
+        // console.log("Filename is empty");
+        filenameInput.classList.add("is-danger");
         emptyInputField = true;
-    } else {
-        filenameInput.classList.remove("is-danger")
-    }
+    };
 
-    if (isEmpty(speedLimitInput.value)) {
-        // console.log("Speedlimit is empty")
-        speedLimitInput.classList.add("is-danger")
+    if (speedLimitInput.value || speedLimitInput.value == 0) {
+        speedLimitInput.classList.add("is-danger");
         emptyInputField = true;
-    } else {
-        speedLimitInput.classList.remove("is-danger")
-    }
+    };
+
+    if (dir == null) {
+        folderSelectBtn.classList.add("is-danger");
+        emptyInputField = true;
+    };
 
     if (!emptyInputField) {
-        console.log("Downloading...")
+        console.log("Downloading...");
 
         urlInput.disabled = true;
         filenameInput.disabled = true;
         speedLimitInput.disabled = true;
 
-        document.getElementById("finishedText").innerHTML = ""
+        document.getElementById("finishedText").innerHTML = "";
 
-        downloadWithBackpressure(urlInput.value, filenameInput.value, speedLimitInput.value)
-    }
-}
+        downloadWithBackpressure(urlInput.value, filenameInput.value, speedLimitInput.value);
+    };
+};
 
 async function downloadWithBackpressure(url, filename, speedLimitInKb) {
     let startDate = Date.now();
@@ -77,10 +90,11 @@ async function downloadWithBackpressure(url, filename, speedLimitInKb) {
                 next(null, chunk);
             }
         }),
-        fs.createWriteStream("downloaded/" + filename)
+        fs.createWriteStream(path.join(dir, filename))
     );
     const elapsed = (Date.now() - startDate) / 1000;
-    document.getElementById("finishedText").innerHTML = `${roundNumber(totalSize / 1024 / 1024, 3)} mb of data downloaded in ${roundNumber(elapsed, 3)} seconds with a speed of ${roundNumber(totalSize / 1024 / elapsed, 3)} kb/s`
+    document.getElementById("finishedText").innerHTML =
+    `${roundNumber(totalSize / 1024 / 1024, 3)} mb of data downloaded in ${roundNumber(elapsed, 3)} seconds with a speed of ${roundNumber(totalSize / 1024 / elapsed, 3)} kb/s`;
     
     urlInput.disabled = false;
     filenameInput.disabled = false;
@@ -89,10 +103,13 @@ async function downloadWithBackpressure(url, filename, speedLimitInKb) {
     urlInput.value = "";
     filenameInput.value = "";
     speedLimitInput.value = "";
-
 }
 
-// ** means exponent
-function roundNumber (input, decimalPlace) {
-    return Math.round(input * (10 ** decimalPlace)) / (10 ** decimalPlace)
-}
+async function folderSelection() {
+    const pickerDir = await ipc.invoke("folderOpen");
+    if (!pickerDir.canceled) {
+        dir = pickerDir.filePaths[0];
+        folderSelectBtn.classList.remove("is-danger");
+    };
+    console.log(dir);
+};

@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
+const electron = require('electron');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -43,6 +44,12 @@ ipcMain.on("manualMaximize", () => {
 })
 ipcMain.on("manualClose", () => {
   mainWindow.close()
+})
+
+ipcMain.handle("folderOpen", () => {
+    return electron.dialog.showOpenDialog(mainWindow, {
+        properties: ['openDirectory']
+    });
 })
 
 // This method will be called when Electron has finished

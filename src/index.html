@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="../node_modules/bulma/css/bulma.min.css">
+    
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="index.css" />
+    <script defer src="render.js"></script>
+    <script defer src="title-bar.js"></script>
+  </head>
+  <body>
+    <nav class="has-background-dark">
+      <p id="title">🚀 Velocity Network Throttler</p>
+      <div class="nav-buttons">
+        <button id="minimize"><i class="fa-solid fa-minus"></i></button>
+        <button id="maximize"><i class="fa-regular fa-square"></i></button>
+        <button id="close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </nav>
+      <br><br>
+
+      <label for="urlInput" class="label">URL:</label>
+      <input type="text" id="urlInput" class="input is-rounded" placeholder="Input URL"><br><br>
+
+      <label for="filenameInput" class="label">Filename:</label>
+      <input type="text" id="filenameInput" class="input is-rounded" placeholder="Input Filename"><br><br>
+
+      <label for="speedLimitInput" class="label">Speed Limit (in Kb):</label>
+      <input type="number" id="speedLimitInput" class="input is-rounded" step="1000" min="0" placeholder="Input speed"><br><br>
+
+      <!-- <button id="folderSelectBtn" class="button">Choose an Output Folder</button> -->
+      <button id="startDownloadBtn" class="button is-primary">Start Download</button>
+
+      <br><br>
+
+      <progress class="progress is-primary" value="100" max="100"></progress>
+      <p id="finishedText"></p>
+      <p id="debugText"></p>
+  </body>
+</html>

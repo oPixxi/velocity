@@ -1,0 +1,67 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  margin: auto;
+  max-width: 38rem;
+  padding: 2rem;
+}
+
+::-webkit-scrollbar {
+  display: none;
+  }
+
+nav {
+  border-bottom: 1px solid #3c3c3c;
+  width: 100%;
+  height: 35px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  -webkit-app-region: drag;
+  position: fixed;
+  top: 0;
+  z-index: 1030;
+}
+
+#title {
+  user-select: none;
+  font-size: 15px;
+  margin-left: 10px;
+  -webkit-app-region: drag
+}
+
+:not(nav) {
+  -webkit-app-region: no-drag;
+}
+
+.nav-buttons {
+  margin-left: auto;
+  height: 100%;
+  display: flex;
+}
+
+.nav-buttons > button {
+  transition: background .2s ease;
+  border: none;
+  height: 100%;
+  margin: 0;
+  aspect-ratio: 1;
+  font-size: 17px;
+}
+
+.nav-buttons > button:hover {
+  transition: .2s ease;
+  background: #2c2c2c;
+  cursor: pointer;
+}
+
+.nav-buttons > button:active {
+  background: #4c4c4c;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

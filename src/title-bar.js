@@ -13,7 +13,7 @@ document.querySelector("#close").addEventListener("click", () => {
     ipc.send("manualClose");
 });
 
-function windowResize () {
+function windowResize() {
     if (window.innerWidth < 340) {
         document.getElementById('title').innerHTML = "🚀 VNT";
     } else {

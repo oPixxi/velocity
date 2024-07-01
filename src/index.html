@@ -22,20 +22,29 @@
       <br><br>
 
       <label for="urlInput" class="label">URL:</label>
-      <input type="text" id="urlInput" class="input is-rounded" placeholder="Input URL"><br><br>
+      <input type="text" id="urlInput" class="input is-rounded" placeholder="Input URL">
+      
+      <br><br>
 
       <label for="filenameInput" class="label">Filename:</label>
-      <input type="text" id="filenameInput" class="input is-rounded" placeholder="Input Filename"><br><br>
+      <input type="text" id="filenameInput" class="input is-rounded" placeholder="Input Filename">
+      
+      <br><br>
 
       <label for="speedLimitInput" class="label">Speed Limit (in Kb):</label>
-      <input type="number" id="speedLimitInput" class="input is-rounded" step="1000" min="0" placeholder="Input speed"><br><br>
+      <div style="display: flex;">
+        <input type="number" id="speedLimitInput" class="input is-rounded" step="1000" min="0" placeholder="Input speed">
+        <button class="button" id="speedLimitRefreshBtn"><i class="fa-solid fa-rotate-right"></i></button>
+      </div>
+      
+      <br><br>
 
       <button id="folderSelectBtn" class="button">Choose an Output Folder</button>
       <button id="startDownloadBtn" class="button is-primary">Start Download</button>
 
       <br><br>
 
-      <progress id="downloadProgressBar" class="progress is-primary" value="100" max="100"></progress>
-      <p id="finishedText"></p>
+      <progress id="downloadProgressBar" class="progress is-primary" value="0" max="100"></progress>
+      <p id="progressText"></p>
   </body>
 </html>

@@ -4,7 +4,7 @@ Velocity is a simple download managing app that allows you to limit the bandwidt
 ## Feature Checklist ##
 
 - [x] Output folder selection
-- [ ] Working progress bar
+- [x] Working progress bar
 - [ ] Queueing system
 - [ ] Download settings
     - [ ] Choice between queue and simultaneous

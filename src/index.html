@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../node_modules/bulma/css/bulma.min.css">
     
     <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="index.css"/>
     <script defer src="render.js"></script>
   </head>
   <body>
@@ -20,23 +20,24 @@
       </div>
     </nav>
       <br><br>
-
-      <label for="urlInput" class="label">URL:</label>
-      <input type="text" id="urlInput" class="input is-rounded" placeholder="Input URL">
+      <div id="parameterInputs">
+        <label for="urlInput" class="label">URL:</label>
+        <input type="text" id="urlInput" class="input is-rounded" placeholder="Input URL">
       
-      <br><br>
+        <br><br>
 
-      <label for="filenameInput" class="label">Filename:</label>
-      <input type="text" id="filenameInput" class="input is-rounded" placeholder="Input Filename">
+        <label for="filenameInput" class="label">Filename:</label>
+        <input type="text" id="filenameInput" class="input is-rounded" placeholder="Input Filename">
       
-      <br><br>
+        <br><br>
 
-      <label for="speedLimitInput" class="label">Speed Limit (in Kb):</label>
-      <div style="display: flex;">
-        <input type="number" id="speedLimitInput" class="input is-rounded" step="1000" min="0" placeholder="Input speed">
-        <button class="button" id="speedLimitRefreshBtn"><i class="fa-solid fa-rotate-right"></i></button>
-      </div>
-      
+        <label for="speedLimitInput" class="label">Speed Limit (in Kb):</label>
+        <div style="display: flex;">
+          <input type="number" id="speedLimitInput" class="input is-rounded" step="1000" min="0" placeholder="Input speed">
+          <button class="button" id="speedLimitRefreshBtn"><i class="fa-solid fa-rotate-right"></i></button>
+        </div>
+    </div>
+
       <br><br>
 
       <button id="folderSelectBtn" class="button">Choose an Output Folder</button>
@@ -44,7 +45,19 @@
 
       <br><br>
 
-      <progress id="downloadProgressBar" class="progress is-primary" value="0" max="100"></progress>
-      <p id="progressText"></p>
+      <!-- <progress id="downloadProgressBar" class="progress is-primary" value="0" max="100"></progress>
+      <p id="progressText"></p> -->
+
+      <div id="downloadContainer">
+        <article class="message" id="downloadItem">
+          <div class="message-header">
+            <p>File-name-File-name-File-name-File-name-File-name</p>
+            <button><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="message-body">
+            <progress class="progress is-primary" value="0" max="100"></progress>
+          </div>
+        </article>
+      </div>
   </body>
 </html>

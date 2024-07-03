@@ -1,0 +1,18 @@
+{
+    "appId": "me.opixxi.velocitydownloader",
+    "productName": "Velocity Downloader",
+    "directories": {
+        "output": "dist"
+    },
+    "files": [
+        "src",
+        "assets"
+    ],
+    "win": {
+        "icon": "assets/logo-1024x.ico",
+        "target": ["portable"]
+     },
+    "linux": {
+        "icon": "assets/logo-1024x.png"
+    }
+}
